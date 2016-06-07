@@ -18,8 +18,8 @@ N1,N2,N3,t = readifrit(path+'IFRIT/ifrit-a=' + a_list[a_i] + '.bin', nvar=4, mod
 # plt.imshow(np.log10(t[:,:,0]), interpolation='nearest')
 # plt.colorbar()
 
-halos = np.genfromtxt(path+'\a=' + a_list_cal[a_i] + '\halo_catalog_a' + a_list_cal[a_i] + '.dat', comments='#', dtype=None)
-Lcat = np.genfromtxt(path+'\a=' + a_list_cal[a_i] + '\gallums.res', comments='#', dtype=None)
+halos = np.genfromtxt(path+'\\a=' + a_list_cal[a_i] + '\halo_catalog_a' + a_list_cal[a_i] + '.dat', comments='#', dtype=None)
+Lcat = np.genfromtxt(path+'\\a=' + a_list_cal[a_i] + '\gallums.res', comments='#', dtype=None)
 
 x = halos['f3']/80.*1024.
 y = halos['f2']/80.*1024.
