@@ -3,18 +3,23 @@ import matplotlib.pyplot as plt
 from tools.io import *
 from tools.smooth import *
 
-a_list =     ['0.0905','0.1000','0.1118','0.1208','0.1281']
-xi_list =    ['99.5'  , '97.5' , '73.3' ,'26.9',  '3.16']
-a_list_cal = ['0.0905','0.1000','0.1118','0.1118','0.1281']
-a_i = 4
+path = '/project/surph/gnedin/REI/H/Cai.B80.N512L2.sf=1_uv=0.15_bw=10_res=200.NMA/B/'
+
+# a_list =     ['0.0905','0.1000','0.1080','0.1118','0.1208','0.1281']
+a_list =  ['0.0905', '0.1000', '0.1009', '0.1017', '0.1026', '0.1034', '0.1043', '0.1052', '0.1061', '0.1070', '0.1080', '0.1089', '0.1099', '0.1108', '0.1118', '0.1128', '0.1138', '0.1148', '0.1156', '0.1165', '0.1173', '0.1182', '0.1190', '0.1199', '0.1208', '0.1216', '0.1225', '0.1234', '0.1244', '0.1253', '0.1262', '0.1272', '0.1281', '0.1291', '0.1301', '0.1311', '0.1321', '0.1331', '0.1341', '0.1343']
+rei = np.genfromtxt('rei.log')
+xi_list = [rei[rei[:,0]==float(a_list[i]),8][0] for i in range(len(a_list))]
+# xi_list =    ['99.5'  , '97.5' , '50.0' ,'73.3' ,'26.9',  '3.16']
+a_list_cal = ['0.0905','0.1000','0.1000','0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281']
+a_i = 3
 
 N1,N2,N3,t = readifrit('E:\REI\Cai.B80.N512L2.sf=1_uv=0.15_bw=10_res=200.NMA\B\IFRIT\ifrit-a=' + a_list[a_i] + '.bin', nvar=4, moden=2, skipmoden=2)
 
 # plt.imshow(np.log10(t[:,:,0]), interpolation='nearest')
 # plt.colorbar()
 
-halos = np.genfromtxt('E:\REI\Cai.B80.N512L2.sf=1_uv=0.15_bw=10_res=200.NMA\B\\a=' + a_list_cal[a_i] + '\halo_catalog_a' + a_list_cal[a_i] + '.dat', comments='#', dtype=None)
-Lcat = np.genfromtxt('E:\REI\Cai.B80.N512L2.sf=1_uv=0.15_bw=10_res=200.NMA\B\\a=' + a_list_cal[a_i] + '\gallums.res', comments='#', dtype=None)
+halos = np.genfromtxt(path+'\a=' + a_list_cal[a_i] + '\halo_catalog_a' + a_list_cal[a_i] + '.dat', comments='#', dtype=None)
+Lcat = np.genfromtxt(path+'\a=' + a_list_cal[a_i] + '\gallums.res', comments='#', dtype=None)
 
 x = halos['f3']/80.*1024.
 y = halos['f2']/80.*1024.
@@ -88,7 +93,7 @@ for II in [0,1,2,3,4,5,6,7,8]:
     plt.ylabel('Luminosity (percentiles)')
     plt.xlabel('21cm brightness (percentiles)')
     plt.colorbar(temp)
-    plt.title(('z=%2.1f xHI='+xi_list[a_i]+'\nSmoothing scale: %1.2f Mpc/h')%(1.0/float(a_list[a_i])-1., R_list[II]))
+    plt.title(('z=%2.1f xHI=%1.3f\nSmoothing scale: %1.2f Mpc/h')%(1.0/float(a_list[a_i])-1., xi_list[a_i], R_list[II]))
     # ax2 = fig.add_axes(rect, frameon=False)
     # plt.xlim([0,1])
     Bbins_labels = ["%2.1f\n%d"%(Bbins[i]*1000, 100.*i/(len(Bbins)-1))+'%' for i in range(len(Bbins))]
