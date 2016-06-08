@@ -1,3 +1,11 @@
+import argparse
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                    help='an integer for the accumulator')
+
+args = parser.parse_args()
+
 import matplotlib
 matplotlib.use('Agg')
 
@@ -15,7 +23,7 @@ rei = np.genfromtxt(path+'rei.log')
 xi_list = [rei[rei[:,0]==float(a_list[i]),8][0] for i in range(len(a_list))]
 # xi_list =    ['99.5'  , '97.5' , '50.0' ,'73.3' ,'26.9',  '3.16']
 a_list_cal = ['0.0905','0.1000','0.1000','0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1000', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1118', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281', '0.1281']
-a_i = 3
+a_i = args.N
 
 N1,N2,N3,t = readifrit(path+'IFRIT/ifrit-a=' + a_list[a_i] + '.bin', nvar=4, moden=2, skipmoden=2)
 
