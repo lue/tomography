@@ -10,8 +10,9 @@ import matplotlib
 matplotlib.use('Agg')
 
 import numpy as np
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+from scipy.stats.stats import pearsonr
 from tools.io import *
 from tools.smooth import *
 
@@ -80,6 +81,7 @@ for i in range(len(sm_res)):
 
 
 R_list = 2**np.arange(10)*80/1024
+P_list = np.zeros([len(R_list),2])
 
 for II in [0,1,2,3,4,5,6,7,8]:
     LNbins = 17
@@ -117,4 +119,6 @@ for II in [0,1,2,3,4,5,6,7,8]:
     plt.xlabel('21cm brightness [mK]')
     plt.savefig(('images/z%02.1f_%02.2fmpch_2'%(1.0/float(a_list[a_i])-1., R_list[II])).replace('.','_')+'.png', dpi=200,bbox_inches='tight')
     plt.close('all')
+
+
 
