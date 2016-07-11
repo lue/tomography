@@ -79,46 +79,47 @@ for i in range(len(sm_res)):
     sm = generate_smoothed_fields(t, [sm_res[i]], shells=False, rescale=1.0)
     gal21[:,2+i] = sm[pos_r[:,0],pos_r[:,1],pos_r[:,2]].flatten()
 
+np.savez(a_list[a_i]+'_cat.npz', gal21=gal21, halos=halos, Lcat=Lcat)
 
 R_list = 2**np.arange(10)*80/1024
 P_list = np.zeros([len(R_list),2])
-
-for II in [0,1,2,3,4,5,6,7,8]:
-    LNbins = 17
-    Lbins = np.percentile(magAB, np.linspace(0, 1, LNbins)*100)
-    BNbins = 11
-    Bbins = np.percentile(gal21[:,II], np.linspace(0, 1, BNbins)*100)
-    H = np.histogram2d(magAB, gal21[:,II], bins=[Lbins, Bbins])
-    img = H[0] / len(Lcat) * (LNbins-1) * (BNbins-1)
-    img = (img - 1.0) * 100.
-    fig = plt.figure()
-    rect = 0.2, 0.15, 0.8, 0.75
-    ax1 = fig.add_axes(rect)
-    temp = ax1.imshow(img,
-                      extent=[0,100,0,100],
-                      interpolation='nearest',
-                      cmap='bwr',
-                      vmin=-np.ceil(np.max(np.abs(img))), vmax=np.ceil(np.max(np.abs(img))),
-                      origin='lower', aspect='auto')
-    # ax1.yaxis.tick_right()
-    # ax1.yaxis.set_label_position('right')
-    # ax1.xaxis.tick_top()
-    # ax1.xaxis.set_label_position('top')
-    plt.ylabel('Luminosity (percentiles)')
-    plt.xlabel('21cm brightness (percentiles)')
-    plt.colorbar(temp)
-    plt.title(('z=%2.1f xHI=%1.3f\nSmoothing scale: %1.2f Mpc/h')%(1.0/float(a_list[a_i])-1., xi_list[a_i], R_list[II]))
-    # ax2 = fig.add_axes(rect, frameon=False)
-    # plt.xlim([0,1])
-    Bbins_labels = ["%2.1f\n%d"%(Bbins[i]*1000, 100.*i/(len(Bbins)-1))+'%' for i in range(len(Bbins))]
-    plt.xticks(np.linspace(0,100,BNbins), Bbins_labels, rotation='horizontal', size=8)
-    # plt.ylim([0,1])
-    Lbins_labels = ["%2.1f\n%d"%(Lbins[i], 100.*i/(len(Lbins)-1))+'%' for i in range(len(Lbins))]
-    plt.yticks(np.linspace(0,100,LNbins), Lbins_labels, rotation='horizontal', size=8)
-    plt.ylabel('Magnitude AB')
-    plt.xlabel('21cm brightness [mK]')
-    plt.savefig(('images/z%02.1f_%02.2fmpch_2'%(1.0/float(a_list[a_i])-1., R_list[II])).replace('.','_')+'.png', dpi=200,bbox_inches='tight')
-    plt.close('all')
+#
+# for II in [0,1,2,3,4,5,6,7,8]:
+#     LNbins = 17
+#     Lbins = np.percentile(magAB, np.linspace(0, 1, LNbins)*100)
+#     BNbins = 11
+#     Bbins = np.percentile(gal21[:,II], np.linspace(0, 1, BNbins)*100)
+#     H = np.histogram2d(magAB, gal21[:,II], bins=[Lbins, Bbins])
+#     img = H[0] / len(Lcat) * (LNbins-1) * (BNbins-1)
+#     img = (img - 1.0) * 100.
+#     fig = plt.figure()
+#     rect = 0.2, 0.15, 0.8, 0.75
+#     ax1 = fig.add_axes(rect)
+#     temp = ax1.imshow(img,
+#                       extent=[0,100,0,100],
+#                       interpolation='nearest',
+#                       cmap='bwr',
+#                       vmin=-np.ceil(np.max(np.abs(img))), vmax=np.ceil(np.max(np.abs(img))),
+#                       origin='lower', aspect='auto')
+#     # ax1.yaxis.tick_right()
+#     # ax1.yaxis.set_label_position('right')
+#     # ax1.xaxis.tick_top()
+#     # ax1.xaxis.set_label_position('top')
+#     plt.ylabel('Luminosity (percentiles)')
+#     plt.xlabel('21cm brightness (percentiles)')
+#     plt.colorbar(temp)
+#     plt.title(('z=%2.1f xHI=%1.3f\nSmoothing scale: %1.2f Mpc/h')%(1.0/float(a_list[a_i])-1., xi_list[a_i], R_list[II]))
+#     # ax2 = fig.add_axes(rect, frameon=False)
+#     # plt.xlim([0,1])
+#     Bbins_labels = ["%2.1f\n%d"%(Bbins[i]*1000, 100.*i/(len(Bbins)-1))+'%' for i in range(len(Bbins))]
+#     plt.xticks(np.linspace(0,100,BNbins), Bbins_labels, rotation='horizontal', size=8)
+#     # plt.ylim([0,1])
+#     Lbins_labels = ["%2.1f\n%d"%(Lbins[i], 100.*i/(len(Lbins)-1))+'%' for i in range(len(Lbins))]
+#     plt.yticks(np.linspace(0,100,LNbins), Lbins_labels, rotation='horizontal', size=8)
+#     plt.ylabel('Magnitude AB')
+#     plt.xlabel('21cm brightness [mK]')
+#     plt.savefig(('images/z%02.1f_%02.2fmpch_2'%(1.0/float(a_list[a_i])-1., R_list[II])).replace('.','_')+'.png', dpi=200,bbox_inches='tight')
+#     plt.close('all')
 
 
 
